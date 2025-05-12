@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/code/Food-Delivery-System-/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/Java-Features/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/Java-Features/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/Java21Features/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaFeatures/JavaFeatures-backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaFeatures/JavaFeatures-frontend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaFeatures/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaFeatures/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaMail/JavaMail-backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaMail/JavaMail-frontend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaMail/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/JavaMail/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/QuizService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/RabbitMQ-Grafana/grpc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/RabbitMQ-Grafana/promethues-grafana /src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/RabbitMQ-Grafana/rabbitMQ/rabbitMQ/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/microservices-usingreactiveprogramming/Order-Service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/microservices-usingreactiveprogramming/Product-Service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/microservices-usingreactiveprogramming/movie-review-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/microservices-usingreactiveprogramming/movie-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/microservices_patterns/Microservices/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/reactive-programming-spring-webflux/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/spring-reactive-secutity/src/main/java" charset="UTF-8" />
+  </component>
+</project>

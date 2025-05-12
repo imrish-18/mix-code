@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/code/JavaMail/pom.xml" />
+        <option value="$PROJECT_DIR$/code/QuizService/pom.xml" />
+        <option value="$PROJECT_DIR$/code/JavaFeatures/pom.xml" />
+        <option value="$PROJECT_DIR$/code/Java-Features/pom.xml" />
+        <option value="$PROJECT_DIR$/code/Java21Features/pom.xml" />
+        <option value="$PROJECT_DIR$/code/RabbitMQ-Grafana/grpc/pom.xml" />
+        <option value="$PROJECT_DIR$/code/RabbitMQ-Grafana/rabbitMQ/rabbitMQ/pom.xml" />
+        <option value="$PROJECT_DIR$/code/RabbitMQ-Grafana/promethues-grafana /pom.xml" />
+        <option value="$PROJECT_DIR$/code/Food-Delivery-System-/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/code/microservices_patterns/Microservices/pom.xml" />
+        <option value="$PROJECT_DIR$/code/spring-reactive-secutity/pom.xml" />
+        <option value="$PROJECT_DIR$/code/reactive-programming-spring-webflux/pom.xml" />
+        <option value="$PROJECT_DIR$/code/microservices-usingreactiveprogramming/movie-service/pom.xml" />
+        <option value="$PROJECT_DIR$/code/microservices-usingreactiveprogramming/Order-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/code/microservices-usingreactiveprogramming/Product-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/code/microservices-usingreactiveprogramming/movie-review-service/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="corretto-23" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

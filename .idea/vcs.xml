@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/Food-Delivery-System-" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/Java-Features" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/JavaFeatures" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/RabbitMQ-Grafana" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/microservices-usingreactiveprogramming" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/reactive-programming-spring-webflux" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/spring-reactive-secutity" vcs="Git" />
+  </component>
+</project>
