@@ -1,0 +1,130 @@
+private Set<PECumulativeDTO> processCumulativeData(List<PECumSrcOfEnergyDTO> peCumSrcOfEnergyList, User user, ResponseAnswer responseAnswer){
+        return peCumSrcOfEnergyList.stream().map(facility -> {
+            return pegMapper.mapToCumulativeEntity(facility, user, responseAnswer);
+        }).collect(Collectors.toCollection(HashSet::new));
+    }
+     public PECumulativeDTO mapToCumulativeEntity(List<PECumSrcOfEnergyDTO> peCumSrcOfEnergyList, User user, ResponseAnswer responseAnswer){
+        ;
+        if(peCumSrcOfEnergyList.() != null) {
+            Set<CumulativeSourceOfEnergy> facilitySourceOfEnergies = mapToCumSourceOfEnergy(peFacListDTO.getPeCumSrcOfEnergyList(), user, responseAnswer);
+            //facility.setFacilitySourceOfEnergies( facilitySourceOfEnergies);
+        }
+        return null;
+    }
+
+    private Set<CumulativeSourceOfEnergy> mapToCumSourceOfEnergy(List<PECumSrcOfEnergyDTO> peCumList, User user, ResponseAnswer responseAnswer){
+        return peCumList.stream().map(srcEnergy -> {
+            CumulativeSourceOfEnergy facilitySourceOfEnergy = null;
+            if(srcEnergy.getPeCumSrcOfEnergyId() != null) {
+                facilitySourceOfEnergy = cumulativeSourceOfEnergyRepository.findById(srcEnergy.getPeCumSrcOfEnergyId())
+                        .orElseThrow(() -> new BadRequestException("Invalid Facility Source of Energy Id "+srcEnergy.getPeCumSrcOfEnergyId()));
+                facilitySourceOfEnergy.setModifyBy(user.getUserId());
+                facilitySourceOfEnergy.setModifyOn(LocalDateTime.now());
+            } else {
+                facilitySourceOfEnergy = new CumulativeSourceOfEnergy();
+                facilitySourceOfEnergy.setCreatedBy(user.getUserId());
+                facilitySourceOfEnergy.setCreatedOn(LocalDateTime.now());
+            }
+            facilitySourceOfEnergy.setEnergySourceName(srcEnergy.getEnergySrcName());
+            facilitySourceOfEnergy.setConsumedValue(srcEnergy.getElecConsum());
+            facilitySourceOfEnergy.setAnyRECMetered(srcEnergy.getAnyRECMetered());
+            facilitySourceOfEnergy.setAnyPlanForRECContract(srcEnergy.getAnyPlanForRECContract());
+            facilitySourceOfEnergy.setAnyRECContract(srcEnergy.getAnyRecContract());
+            facilitySourceOfEnergy.setRecType(srcEnergy.getRecType());
+            facilitySourceOfEnergy.setRecPurchasedQuantity(srcEnergy.getRecPurcQuantity());
+            facilitySourceOfEnergy.setRecRetiredQuantity(srcEnergy.getRecRetQuantity());
+            facilitySourceOfEnergy.setRecDocument(srcEnergy.getRecDoc());
+
+
+            if(srcEnergy.getEnergySrcId() != null) {
+                facilitySourceOfEnergy.setEnergySource(energySourceRepository.findById(srcEnergy.getEnergySrcId()).orElse(null));
+            }
+            if(srcEnergy.getPeCumRecContractsList() != null) {
+                List<CumulativeRECContract> facilityRecContract = mapToCumRecContract(srcEnergy.getPeCumRecContractsList(), user, facilitySourceOfEnergy);
+            }
+
+            return facilitySourceOfEnergy;
+        }).collect(Collectors.toCollection(HashSet::new));
+    }
+    private List<CumulativeRECContract> mapToCumRecContract(List<PECumRecContractsDTO> peCumRecContractsList, User user, CumulativeSourceOfEnergy facilitySourceOfEnergy){
+        return peCumRecContractsList.stream().map(recContractsDTO -> {
+            CumulativeRECContract facilityRecContract = null;
+            if(recContractsDTO.getPeCumContractId() != null) {
+                facilityRecContract = cumulativeRECContractRepository.findById(recContractsDTO.getPeCumContractId())
+                        .orElseThrow(() -> new BadRequestException("Invalid Facility REC Contract with Id "+recContractsDTO.getPeCumContractId()));
+                facilityRecContract.setModifyBy(user.getUserId());
+                facilityRecContract.setModifyOn(LocalDateTime.now());
+            } else {
+                facilityRecContract = new CumulativeRECContract();
+                facilityRecContract.setCreatedBy(user.getUserId());
+                facilityRecContract.setCreatedOn(LocalDateTime.now());
+            }
+            facilityRecContract.setContractTypeName(recContractsDTO.getContractTypName());
+            facilityRecContract.setContractTenure(recContractsDTO.getContractTenure());
+            if(recContractsDTO.getCapUnitId()!= null) {
+                Optional<Unit> unit=unitRepository.findById(recContractsDTO.getCapUnitId());
+                if(unit.isPresent())
+                    facilityRecContract.setCapacityUnitId(unit.get().getUnitId());
+                else
+                {
+                    facilityRecContract.setCapacityUnitId(null);
+                }
+            }
+
+            facilityRecContract.setCapacityValue(recContractsDTO.getCapValue());
+            if(recContractsDTO.getConsAmtUnitId()!= null) {
+                Optional<Unit> unit=unitRepository.findById(recContractsDTO.getConsAmtUnitId());
+                if(unit.isPresent())
+                facilityRecContract.setConsumedAmountUnitId(unit.get().getUnitId());
+                else facilityRecContract.setConsumedAmountUnitId(null);
+            }
+            facilityRecContract.setConsumedAmountValue(recContractsDTO.getConsAmt());
+            facilityRecContract.setContractDocument(recContractsDTO.getContractDoc());
+            facilityRecContract.setCumulativeSourceOfEnergy(facilitySourceOfEnergy);
+
+            return facilityRecContract;
+        }).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PECumSrcOfEnergyDTO {
+    private Integer peCumSrcOfEnergyId;
+    private Integer energySrcId;
+    private String energySrcName;
+    private String isCumMetered;
+    private Integer elecConsumUnitId;
+    private Integer elecConsum;
+    private String isCumHasArea;
+    private Integer totAreaUnitId;
+    private Integer totAreaValue;
+    private Integer spaceAreaUnitId;
+    private Integer spaceArea;
+    private Integer elecUsesUnitId;
+    private Integer elecUses;
+    private BigDecimal occupancyRate;
+    private String anyRECMetered;
+    private String recType;
+    private Integer recPurcQuantity;
+    private Integer recRetQuantity;
+    private String recDoc;
+    private String anyPlanForRECContract;
+    private String anyRecContract;
+    private List<PECumRecContractsDTO> peCumRecContractsList;
+}
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PECumRecContractsDTO {
+    private Integer peCumContractId;
+    private String contractTypName;
+    private Integer contractTenure;
+    private Integer capUnitId;
+    private Integer capValue;
+    private Integer consAmtUnitId;
+    private Integer consAmt;
+    private String contractDoc;
+}

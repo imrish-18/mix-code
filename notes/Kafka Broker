@@ -1,0 +1,47 @@
+Kafka Broker
+
+The broker is the kafka server. it is just a meaningful name given to the kafka server. And this name makes sense as well because all that kafka does is act as a message broker between producer and consumer 
+
+The producer and consumer don't interact directly . They use kafka server as an agent or a broker to exchange messages 
+
+
+Producer 
+Producer is an application that sends messages. It does not send messages directly to the recipient . It send messages only to the Kafka server.
+
+Consumer 
+
+Consumer is an application that reads messages from the Kafka server.
+
+if producers are sending data , they must be sending it to someone , right ? The consumer are the recipients. But remember that the producer don't send data to a recipient address. They just send it to the kafka server . And anyone who is interested in that data can come forward and take it from kafka server . So , any applicaiton that requests data from a kafka server is a consumer and they can ask for data send by any producer provided they have permissions to read it 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

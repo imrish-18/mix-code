@@ -1,0 +1,58 @@
+public String determinePEDataFlow(Integer assessmentYear, User user) {
+    // Find the Question ID based on questionCode
+    Question question = questionRepository.findByQuestionCode("PE02")
+            .orElseThrow(() -> new BadRequestException("Invalid QuestionCode: PE02"));
+
+    // Find the ResponseYearID based on assessmentYear and user
+    ResponseYearly responseYearly = responseYearlyRepository.findByAssessmentYearAndCreatedBy(assessmentYear, user.getUserId())
+            .orElseThrow(() -> new BadRequestException("No ResponseYearly data found for the given assessmentYear and user"));
+
+    // Find the AnswerValue based on questionId and responseYearId
+    ResponseAnswer responseAnswer = responseAnswerRepository.findByQuestionAndResponseYearly(question.getQuestionID(), responseYearly.getResponseYearId())
+            .orElseThrow(() -> new BadRequestException("No ResponseAnswer data found for the given question and responseYear"));
+
+    // Determine flow based on answeredValue
+    String answeredValue = responseAnswer.getAnsweredValue();
+    if ("yes".equalsIgnoreCase(answeredValue)) {
+        return "granular";
+    } else {
+        return "cumulative";
+    }
+}
+
+@Repository
+public interface QuestionRepository extends JpaRepository<Question, Integer> {
+    Optional<Question> findByQuestionCode(String questionCode);
+}
+
+@Repository
+public interface ResponseYearlyRepository extends JpaRepository<ResponseYearly, Integer> {
+    Optional<ResponseYearly> findByAssessmentYearAndCreatedBy(Integer assessmentYear, Integer createdBy);
+}
+@Repository
+public interface ResponseAnswerRepository extends JpaRepository<ResponseAnswer, Integer> {
+    Optional<ResponseAnswer> findByQuestionAndResponseYearly(Integer questionId, Integer responseYearId);
+}
+@GetMapping("/getPEData/{assessmentYear}")
+public ResponseEntity<String> getPEDataFlow(@PathVariable("assessmentYear") Integer assessmentYear) {
+    log.info("Processing PE data flow for assessment year: {}", assessmentYear);
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    try {
+        String flowType = purchaseElectricityService.determinePEDataFlow(assessmentYear, user);
+        return ResponseEntity.ok(flowType);
+    } catch (Exception ex) {
+        log.error("Error occurred while determining PE data flow for assessmentYear {}. Details: {}", assessmentYear, ex.getMessage());
+        throw new MarketPlaceException("Error while processing PE data!");
+    }
+}
+SELECT QuestionID 
+FROM questions 
+WHERE QuestionCode = 'PE02';
+SELECT ResponseYearID 
+FROM responseyearly 
+WHERE AssessmentYear = :assessmentYear 
+  AND CreatedBy = :userId;
+SELECT AnsweredValue 
+FROM responseanswers 
+WHERE QuestionID = :questionId 
+  AND ResponseYearID = :responseYearId;
