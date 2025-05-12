@@ -1,0 +1,175 @@
+1. Lambda Expressions
+Lambda expressions allow you to write anonymous functions (functions without names) and treat functionality as a method argument.
+
+(parameter) -> expression
+
+List<String> list = Arrays.asList("a", "b", "c");
+list.forEach(item -> System.out.println(item));
+
+2. Functional Interfaces
+An interface with a single abstract method is called a functional interface. Java 8 provides several built-in ones like Runnable, Callable, Comparator, Function, Predicate, etc.
+
+Example:
+@FunctionalInterface
+interface MyFunction {
+    void execute();
+}
+3. Stream API
+Stream API allows processing sequences of elements (like collections) in a functional style. It supports operations like map, filter, reduce, etc.
+
+Example:
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+names.stream()
+     .filter(name -> name.startsWith("A"))
+     .forEach(System.out::println);
+4. Default and Static Methods in Interfaces
+You can now add method implementations directly inside interfaces using default or static methods.
+
+Example:
+interface MyInterface {
+    default void defaultMethod() {
+        System.out.println("Default method");
+    }
+
+    static void staticMethod() {
+        System.out.println("Static method");
+    }
+}
+
+5. Method References
+A shorthand for lambda expressions to call a method.
+
+Syntax:
+ClassName::methodName
+
+6. Optional
+Optional is a container object which may or may not contain a non-null value. Helps avoid NullPointerException.
+
+Example:
+Optional<String> name = Optional.ofNullable("John");
+name.ifPresent(System.out::println);
+
+7. New Date and Time API (java.time package)
+A modern, immutable, and thread-safe date and time API to replace the old Date and Calendar.
+
+Example:
+LocalDate today = LocalDate.now();
+LocalDate birthday = LocalDate.of(1990, Month.JANUARY, 1);
+Period age = Period.between(birthday, today);
+System.out.println(age.getYears());
+8. Collectors and Collectors.toList()
+Used to collect results from streams into collections or strings.
+
+Example:
+List<String> upperCaseNames = names.stream()
+                                   .map(String::toUpperCase)
+                                   .collect(Collectors.toList());
+
+
+
+                                   EmployeeManagement/
+├── src/
+│   ├── model/
+│   │   └── Employee.java
+│   ├── service/
+│   │   └── EmployeeService.java
+│   ├── main/
+│   │   └── Main.java
+package model;
+
+
+public class Employee {
+    private int id;
+    private String name;
+    private double salary;
+    private String department;
+
+    public Employee(int id, String name, double salary, String department) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.department = department;
+    }
+
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public double getSalary() { return salary; }
+    public String getDepartment() { return department; }
+
+    @Override
+    public String toString() {
+        return id + " | " + name + " | " + salary + " | " + department;
+    }
+}
+
+package service;
+
+import model.Employee;
+
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+@FunctionalInterface
+interface EmployeeFilter {
+    boolean filter(Employee e);
+
+    default EmployeeFilter and(EmployeeFilter other) {
+        return e -> this.filter(e) && other.filter(e);
+    }
+}
+
+public class EmployeeService {
+
+    public void filterEmployees(List<Employee> employees, EmployeeFilter filter) {
+        employees.stream()
+                 .filter(filter::filter)
+                 .forEach(System.out::println);
+    }
+
+    public List<String> getNamesSortedBySalary(List<Employee> employees) {
+        return employees.stream()
+                        .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+                        .map(Employee::getName)
+                        .collect(Collectors.toList());
+    }
+
+    public Optional<Employee> findHighestPaidEmployee(List<Employee> employees) {
+        return employees.stream()
+                        .max(Comparator.comparingDouble(Employee::getSalary));
+    }
+}
+
+package main;
+
+import model.Employee;
+import service.EmployeeService;
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "Alice", 75000, "IT"),
+            new Employee(2, "Bob", 60000, "HR"),
+            new Employee(3, "Charlie", 80000, "IT"),
+            new Employee(4, "Diana", 50000, "Finance")
+        );
+
+        EmployeeService service = new EmployeeService();
+
+        System.out.println("🔍 IT Department Employees:");
+        service.filterEmployees(employees, e -> "IT".equals(e.getDepartment()));
+
+        System.out.println("\n📈 Sorted by Salary:");
+        service.getNamesSortedBySalary(employees).forEach(System.out::println);
+
+        System.out.println("\n💰 Highest Paid Employee:");
+        service.findHighestPaidEmployee(employees)
+               .ifPresentOrElse(
+                   System.out::println,
+                   () -> System.out.println("No employee found")
+               );
+    }
+}
+

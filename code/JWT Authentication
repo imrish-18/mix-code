@@ -1,0 +1,55 @@
+JWT Authentication 
+
+JWT (JSON Web Token) is a compact, self-contained way of securely transmitting information between parties as a JSON object. It's commonly used for authentication and authorization in web applications.
+
+Structure of a JWT
+A JWT consists of three parts, separated by dots (.):
+
+Header: Contains metadata about the token.
+Payload: Contains the claims (data).
+Signature: Verifies the integrity of the token.
+
+
+1. Header
+The header typically consists of two parts:
+
+Algorithm used (e.g., HS256, RS256).
+Type of token (JWT).
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+2. Payload
+The payload contains claims, which are statements about the user or other data. There are three types of claims:
+
+Registered claims (e.g., iss, exp, sub).
+Public claims (custom claims, e.g., username or role).
+Private claims (shared between parties).
+{
+  "username": "example",
+  "role": "admin",
+  "exp": 1631228100
+}
+
+3. Signature
+The signature ensures the token's integrity. It's created by encoding the header, payload, and a secret using the specified algorithm.
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret
+)
+
+json web token
+used to authenticate users
+
+JQT gains popularity because of token not cookies and no session
+
+when request first comes to server then server validate the token and if the validation request fails the request is rejected 
+
+
+. Authentication
+Authentication ensures that users are who they claim to be.
+. Authorization
+Authorization determines what resources or actions a user is allowed to access.
+
